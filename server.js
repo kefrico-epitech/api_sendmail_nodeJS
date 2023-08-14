@@ -20,23 +20,23 @@ const transporter = nodemailer.createTransport({
 // Point de terminaison pour l'envoi d'e-mail
 app.post('/send-email', async (req, res) => {
     try {
-        const { to, subject, text } = req.body;
+        const { to, subject, html, authorName } = req.body; // Ajoutez "authorName"
 
         // Paramètres de l'e-mail
         const mailOptions = {
-            from: process.env.SMTP_EMAIL,
+            from: `"${authorName}" <${process.env.SMTP_EMAIL}>`, // Utilisation de "from" pour le nom de l'auteur
             to,
             subject,
-            text,
+            html,
         };
 
         // Envoi de l'e-mail
         await transporter.sendMail(mailOptions);
 
-        res.status(200).json({ message: 'E-mail envoyé avec succès !' });
+        res.status(200).json({ status: 200, message: 'E-mail envoyé avec succès !' });
     } catch (error) {
         console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
-        res.status(500).json({ message: 'Une erreur est survenue lors de l\'envoi de l\'e-mail.' });
+        res.status(500).json({ status: 400, message: 'Une erreur est survenue lors de l\'envoi de l\'e-mail.' });
     }
 });
 
