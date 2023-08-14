@@ -17,6 +17,19 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+app.get('/', async (res) => {
+    res.status(200).json({
+        message: "Bienvenus sur notre api sendmail NodeJS",
+        route: "/send-mail",
+        body: {
+            "to": "destinataire@example.com",
+            "subject": "Sujet de l'e-mail personnalisé",
+            "html": "<p>Contenu HTML de l'e-mail personnalisé</p>",
+            "authorName": "Votre Nom"
+        }
+
+    })
+})
 // Point de terminaison pour l'envoi d'e-mail
 app.post('/send-email', async (req, res) => {
     try {
