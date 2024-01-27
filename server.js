@@ -2,12 +2,11 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
-require('dotenv').config();//Importation du fichier .env
-
-app.use(cors()); 
+require('dotenv').config();
 
 const app = express();
+
+app.use(cors());
 app.use(bodyParser.json());
 
 // Configuration du transporteur SMTP
@@ -31,14 +30,15 @@ app.get('/', async (req, res) => {
         }
     });
 });
+
 // Point de terminaison pour l'envoi d'e-mail
 app.post('/send-email', async (req, res) => {
     try {
-        const { to, subject, html, authorName } = req.body; // Ajoutez "authorName"
+        const { to, subject, html, authorName } = req.body;
 
         // Paramètres de l'e-mail
         const mailOptions = {
-            from: `"${authorName}" <${process.env.SMTP_EMAIL}>`, // Utilisation de "from" pour le nom de l'auteur
+            from: `"${authorName}" <${process.env.SMTP_EMAIL}>`,
             to,
             subject,
             html,
