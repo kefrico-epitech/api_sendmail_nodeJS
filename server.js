@@ -1,9 +1,11 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 require('dotenv').config();//Importation du fichier .env
 
+app.use(cors()); 
 
 const app = express();
 app.use(bodyParser.json());
