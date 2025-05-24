@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: API SendMail Node.js
+  description: Une API simple pour envoyer des e-mails en utilisant Node.js et Nodemailer.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Serveur local
+
+paths:
+  /:
+    get:
+      summary: Message d'accueil
+      description: Retourne un message de bienvenue avec un exemple du corps de la requête pour envoyer un e-mail.
+      responses:
+        '200':
+          description: Message de bienvenue et détails de l'API
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  route:
+                    type: string
+                  body:
+                    type: object
+                    properties:
+                      to:
+                        type: string
+                        example: destinataire@example.com
+                      subject:
+                        type: string
+                        example: Sujet de l'e-mail personnalisé
+                      html:
+                        type: string
+                        example: "<p>Contenu HTML de l'e-mail personnalisé</p>"
+                      authorName:
+                        type: string
+                        example: Votre Nom
+
+  /send-email:
+    post:
+      summary: Envoyer un e-mail
+      description: Envoie un e-mail avec le contenu HTML fourni.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - to
+                - subject
+                - html
+                - authorName
+              properties:
+                to:
+                  type: string
+                  format: email
+                  example: destinataire@example.com
+                subject:
+                  type: string
+                  example: Sujet de l'e-mail personnalisé
+                html:
+                  type: string
+                  example: "<p>Contenu HTML de l'e-mail personnalisé</p>"
+                authorName:
+                  type: string
+                  example: Votre Nom
+      responses:
+        '200':
+          description: E-mail envoyé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: E-mail envoyé avec succès !
+        '400':
+          description: Erreur lors de l'envoi de l'e-mail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Une erreur est survenue lors de l'envoi de l'e-mail.
