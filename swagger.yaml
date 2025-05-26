@@ -7,6 +7,8 @@ info:
 servers:
   - url: http://localhost:3000
     description: Serveur local
+  - url: https://sendermail-api.onrender.com
+    description: API en production (Render)
 
 paths:
   /:

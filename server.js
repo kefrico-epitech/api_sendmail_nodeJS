@@ -9,13 +9,13 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 
 const app = express();
 
-// Par celle-ci :
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+const corsOptions = {
+    origin: '*', // Autorise toutes les origines (attention à la sécurité, voir plus bas)
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
